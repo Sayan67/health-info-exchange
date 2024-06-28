@@ -2,6 +2,9 @@
 import React, { useEffect, useState } from 'react'
 import Logo from '@/public/lottie/logo.svg'
 import { Button } from '../ui/button'
+import Link from 'next/link'
+
+
 
 const usernav = [
     {
@@ -18,13 +21,17 @@ const Desktop = () => {
         setUserType(localStorage.getItem("usertype"))
     }, [])
     return (
-        <div className='flex justify-between px-10 py-4 items-center border-b'>
+        <div className='flex justify-between px-10 py-4 items-center border-b fixed top-0 w-full bg-white/20 backdrop-blur-lg z-50'>
             <Logo className="w-48" />
             {
-                !isLoggedIn&&
+                !isLoggedIn &&
                 <div className='flex gap-4'>
-                    <Button variant="outline">Login</Button>
-                    <Button variant="default">Register</Button>
+                    <Link href="/login">
+                        <Button variant="outline" className=''>Login</Button>
+                    </Link>
+                    <Link href="/signup">
+                        <Button variant="default">Register</Button>
+                    </Link>
                 </div>
             }
             {
@@ -38,7 +45,7 @@ const Desktop = () => {
                 </div>
             }
 
-            
+
 
         </div>
     )

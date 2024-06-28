@@ -22,7 +22,7 @@ const page = () => {
                 <h1 className='text-lg md:text-2xl font-bold'>List of organisations asking for permission</h1>
                 <div className='w-fit relative right-0 top-0 p-3 sm:p-4 rounded-full border flex items-center justify-center group h-fit'>
                     <h1 className='absolute text-sm'>?</h1>
-                    <div className='w-60  px-5 py-4 border bg-white/60 backdrop-blur-md border-slate-200 rounded-2xl absolute top-10 -left-[13.5rem] sm:left-10 scale-0 group-hover:scale-100 duration-300'>
+                    <div className='w-60  px-5 py-4 border bg-white/60 backdrop-blur-md border-slate-200 rounded-2xl absolute top-10 -left-[13.5rem] sm:left-10 scale-0 group-hover:scale-100 duration-300 origin-top-left'>
                         <h1 className='text-slate-500'>! These are the list of medical organisation bodies which are having the permission to access your medical records !</h1>
                     </div>
                 </div>
