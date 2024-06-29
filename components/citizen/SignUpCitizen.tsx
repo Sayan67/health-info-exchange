@@ -1,10 +1,12 @@
 import React, { useState } from 'react';
+import { signupCitizen } from '@/lib/api';
 
 interface SignUpCitizenProps {}
 
 const SignUpCitizen: React.FC<SignUpCitizenProps> = () => {
   const [formData, setFormData] = useState({
-    aadharCard: '',
+    name:"",
+    aadhar: '',
     password: ''
   });
 
@@ -18,18 +20,31 @@ const SignUpCitizen: React.FC<SignUpCitizenProps> = () => {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    console.log('Form Data:', formData);
+    const res = signupCitizen(formData).catch(console.log)
+    console.log('Form Data:', res);
   };
 
   return (
     <form onSubmit={handleSubmit} className="max-w-md mx-auto mt-10 p-5 border rounded shadow-lg">
       <div className="mb-4">
-        <label htmlFor="aadharCard" className="block text-sm font-medium text-gray-700">Aadhar Card Number</label>
+        <label htmlFor="name" className="block text-sm font-medium text-gray-700">Name</label>
         <input
           type="text"
-          name="aadharCard"
-          id="aadharCard"
-          value={formData.aadharCard}
+          name="name"
+          id="name"
+          value={formData.name}
+          onChange={handleChange}
+          className="mt-1 block w-full p-2 border border-gray-300 rounded"
+          required
+        />
+      </div>
+      <div className="mb-4">
+        <label htmlFor="aadhar" className="block text-sm font-medium text-gray-700">Aadhar Card Number</label>
+        <input
+          type="text"
+          name="aadhar"
+          id="aadhar"
+          value={formData.aadhar}
           onChange={handleChange}
           className="mt-1 block w-full p-2 border border-gray-300 rounded"
           required

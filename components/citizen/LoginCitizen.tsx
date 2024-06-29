@@ -1,10 +1,16 @@
 import React, { useState } from 'react';
+import { loginCitizen } from '@/lib/api';
+import { useRouter } from 'next/navigation'
+import { useAuthStore } from '@/lib/store';
 
-interface LoginCitizenProps {}
+
+interface LoginCitizenProps { }
 
 const LoginCitizen: React.FC<LoginCitizenProps> = () => {
+  const setToken = useAuthStore((state)=>state.setToken)
+  const router = useRouter()
   const [formData, setFormData] = useState({
-    aadharCard: '',
+    aadhar: '',
     password: ''
   });
 
@@ -16,20 +22,27 @@ const LoginCitizen: React.FC<LoginCitizenProps> = () => {
     });
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    console.log('Form Data:', formData);
+    const res = await loginCitizen(formData) as {data:{data:{token:string}}, status: number }
+      if (res.status === 201) {
+        setToken(res.data.data.token)
+        localStorage.setItem("token",res.data.data.token)
+        router.push("/permission-requests")
+      }
+    
+    console.log('Form Data:', res);
   };
 
   return (
     <form onSubmit={handleSubmit} className="max-w-md mx-auto mt-10 p-5 border rounded shadow-lg">
       <div className="mb-4">
-        <label htmlFor="aadharCard" className="block text-sm font-medium text-gray-700">Aadhar Card Number</label>
+        <label htmlFor="aadhar" className="block text-sm font-medium text-gray-700">Aadhar Card Number</label>
         <input
           type="text"
-          name="aadharCard"
-          id="aadharCard"
-          value={formData.aadharCard}
+          name="aadhar"
+          id="aadhar"
+          value={formData.aadhar}
           onChange={handleChange}
           className="mt-1 block w-full p-2 border border-gray-300 rounded"
           required
