@@ -6,6 +6,8 @@ interface StoreToken {
   setToken: (token: string) => void;
   type: string | null;
   setType: (type: string) => void;
+  firstLetter: string;
+  setFirstLetter: (firstLetter: string) => void;
 }
 
 const useAuthStore = create<StoreToken>()(
@@ -16,7 +18,9 @@ const useAuthStore = create<StoreToken>()(
         set({ token });
       },
       type: null,
-      setType: (type: string) => set({ type }),
+      setType: (type: string) => {set({ type })},
+      firstLetter: "U",
+      setFirstLetter: (firstLetter: string) => {set({ firstLetter })},
     }),
     { name: "" }
   )

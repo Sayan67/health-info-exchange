@@ -18,7 +18,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={Open.className +" text-neutral-700 "}>
+      <body className={Open.className +" text-neutral-700"}>
         <Desktop/>      
         {children}
         <Footer/>

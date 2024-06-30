@@ -3,11 +3,11 @@ import { loginCitizen } from '@/lib/api';
 import { useRouter } from 'next/navigation'
 import { useAuthStore } from '@/lib/store';
 
-
 interface LoginCitizenProps { }
 
 const LoginCitizen: React.FC<LoginCitizenProps> = () => {
   const setToken = useAuthStore((state)=>state.setToken)
+  const storeType = useAuthStore((state)=>state.setType);
   const router = useRouter()
   const [formData, setFormData] = useState({
     aadhar: '',
@@ -27,8 +27,10 @@ const LoginCitizen: React.FC<LoginCitizenProps> = () => {
     const res = await loginCitizen(formData) as {data:{data:{token:string}}, status: number }
       if (res.status === 201) {
         setToken(res.data.data.token)
+        storeType("citizen")
+        localStorage.setItem("usertype","citizen")
         localStorage.setItem("token",res.data.data.token)
-        router.push("/permission-requests")
+        router.push("/")
       }
     
     console.log('Form Data:', res);

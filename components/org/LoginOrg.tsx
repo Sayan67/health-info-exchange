@@ -1,8 +1,17 @@
 import React, { useState } from 'react';
+import { loginOrg } from '@/lib/api';
+import { useAuthStore } from '@/lib/store';
+import { useRouter } from 'next/navigation';
+import { orgDetails } from '@/lib/api';
 
 interface LoginOrgProps {}
 
 const LoginOrg: React.FC<LoginOrgProps> = () => {
+  const storeToken = useAuthStore((state)=>state.setToken);
+  const storeType = useAuthStore((state)=>state.setType);
+  const setFirstLetter = useAuthStore((state)=>state.setFirstLetter);
+  const router  = useRouter()
+
   const [formData, setFormData] = useState({
     email: '',
     password: ''
@@ -16,9 +25,21 @@ const LoginOrg: React.FC<LoginOrgProps> = () => {
     });
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async(e: React.FormEvent) => {
     e.preventDefault();
-    console.log('Form Data:', formData);
+    const res = await loginOrg(formData) as {data:{data:{token:string}}, status: number };
+    if(res.status===201){
+      storeToken(res.data.data.token)
+      const obj = await orgDetails(res.data.data.token) as {ok:boolean,data:{name:string}}
+      if(obj.ok){
+        setFirstLetter(obj.data.name[0])
+      }
+      storeType("Org")
+      localStorage.setItem("usertype","org")
+      localStorage.setItem("token",res.data.data.token)
+      router.push("/")
+    }
+    console.log('Form Data:', res);
   };
 
   return (

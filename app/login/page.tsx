@@ -3,8 +3,10 @@ import React, { useState } from 'react'
 import LoginCitizen from '@/components/citizen/LoginCitizen'
 import LoginOrg from '@/components/org/LoginOrg'
 
+
 const page = () => {
     const [type, setType] = useState(true)
+    
     const handleClick = (type: boolean) => {
         setType(type)
     }

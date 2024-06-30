@@ -49,11 +49,18 @@
   }
 }
 
+html{
+  scroll-behavior: smooth;
+  scroll-padding-top: 6rem;
+}
+
+
 @layer base {
   * {
     @apply border-border;
   }
   body {
+    scroll-behavior: smooth;
     @apply bg-background text-foreground;
   }
 }
